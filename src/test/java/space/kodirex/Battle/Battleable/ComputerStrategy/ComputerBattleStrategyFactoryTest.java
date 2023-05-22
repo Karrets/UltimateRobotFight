@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+//This test covers pretty much everything in the Battleable package
 class ComputerBattleStrategyFactoryTest {
     @BeforeAll
     static void beforeAll() {

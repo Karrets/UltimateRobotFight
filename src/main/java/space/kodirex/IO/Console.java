@@ -28,7 +28,9 @@ public class Console extends IOProvider {
             outputf("%d. %s%n", parse.getID(), parse.getValue().toString());
         }
 
-        String input = keyboard.nextLine();
+        String input = "";
+        if(keyboard.hasNext())
+            input = keyboard.nextLine();
 
         try {
             return Parsable.getParseable(Integer.parseInt(input), parsable);
