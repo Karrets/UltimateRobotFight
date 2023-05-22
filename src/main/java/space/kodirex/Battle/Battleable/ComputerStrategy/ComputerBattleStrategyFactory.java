@@ -7,7 +7,7 @@ import space.kodirex.Battle.Battleable.Battleable;
  * Factory Pattern!
  */
 public class ComputerBattleStrategyFactory {
-    static ComputerBattleStrategy getStrategy(ComputerBattleStrategyType type) {
+    public static ComputerBattleStrategy getStrategy(ComputerBattleStrategyType type) {
         return switch(type) {
             case STUPID -> arena -> Action.values()[(int) (Math.random() * Action.values().length)];
             case SMART -> arena -> {

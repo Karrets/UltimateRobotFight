@@ -20,8 +20,8 @@ public abstract class IOProvider {
 
     public abstract void output(String output);
     public abstract void outputf(String output, Object... objects);
-    public abstract <V> Optional<Parsable<V>> getParseable(String prompt, Parsable<V>[] parsable);
-    public final <V> Optional<Parsable<V>> getParseable(String prompt, Supplier<Parsable<V>[]> parsable) {
+    public abstract <V extends Parsable<?>> Optional<V> getParseable(String prompt, V[] parsable);
+    public final <V extends Parsable<?>> Optional<V> getParseable(String prompt, Supplier<V[]> parsable) {
         return getParseable(prompt, parsable.get());
     }
 }

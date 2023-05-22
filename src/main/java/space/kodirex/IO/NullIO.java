@@ -10,7 +10,7 @@ public class NullIO extends IOProvider {
     public void outputf(String output, Object... objects) {}
 
     @Override
-    public <V> Optional<Parsable<V>> getParseable(String prompt, Parsable<V>[] parsable) {
+    public <V extends Parsable<?>> Optional<V> getParseable(String prompt, V[] parsable) {
         return Optional.empty();
     }
 }

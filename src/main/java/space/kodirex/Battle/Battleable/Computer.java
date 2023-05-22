@@ -3,6 +3,7 @@ package space.kodirex.Battle.Battleable;
 import space.kodirex.Battle.Action;
 import space.kodirex.Battle.Arena;
 import space.kodirex.Battle.Battleable.ComputerStrategy.ComputerBattleStrategy;
+import space.kodirex.IO.IOProvider;
 
 public class Computer implements Battleable {
     private final ComputerBattleStrategy strategy;
@@ -71,28 +72,32 @@ public class Computer implements Battleable {
         }
     }
 
-    private int repair() {
+    private void repair() {
         int todo = (int) (Math.random() * 10 + 1); //1 -> 10
+        if(powered)
+            health *= 2;
+
         health += todo;
-        return todo;
+
+        IOProvider.get().outputf("clank clank! %s repair %d hp.%n", name, todo);
     }
 
-    private int attack() {
+    private void attack() {
         int todo = (int) (Math.random() * 20 + 6);
         if(powered)
-            todo *= 1.5;
+            todo *= 2;
         arena.inactive.get().damage(todo); //5 -> 25
         powered = false;
-        return todo;
     }
 
     public void damage(int damage) {
         if(blocking) {
             blocking = false;
-            health -= damage / 2;
+            damage /= 3;
         }
-        else {
-            health -= damage;
-        }
+
+        health -= damage;
+
+        IOProvider.get().outputf("ouch! %s took %d damage.%n", name, damage);
     }
 }

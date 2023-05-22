@@ -2,6 +2,9 @@ package space.kodirex.Battle.Battleable;
 
 import space.kodirex.Battle.Action;
 import space.kodirex.Battle.Arena;
+import space.kodirex.IO.IOProvider;
+
+import java.util.Optional;
 
 public class Player implements Battleable {
     private Arena arena;
@@ -21,7 +24,12 @@ public class Player implements Battleable {
 
     @Override
     public Action getNextAction() {
-        return null; //TODO: Implement
+        Optional<Action> action = Optional.empty();
+
+        while(action.isEmpty())
+            action = IOProvider.get().getParseable("What would you like to do?", Action.values());
+
+        return action.get();
     }
 
     @Override
@@ -54,28 +62,32 @@ public class Player implements Battleable {
         }
     }
 
-    private int repair() {
+    private void repair() {
         int todo = (int) (Math.random() * 10 + 1); //1 -> 10
+        if(powered)
+            health *= 2;
+
         health += todo;
-        return todo;
+
+        IOProvider.get().outputf("clank clank! You repair %d hp.%n", todo);
     }
 
-    private int attack() {
+    private void attack() {
         int todo = (int) (Math.random() * 20 + 6);
         if(powered)
-            todo *= 1.5;
+            todo *= 2;
         arena.inactive.get().damage(todo); //5 -> 25
         powered = false;
-        return todo;
     }
 
     public void damage(int damage) {
         if(blocking) {
             blocking = false;
-            health -= damage / 2;
+            damage /= 3;
         }
-        else {
-            health -= damage;
-        }
+
+        health -= damage;
+
+        IOProvider.get().outputf("ouch! You took %d damage.%n", damage);
     }
 }

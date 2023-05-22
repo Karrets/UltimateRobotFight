@@ -3,7 +3,6 @@ package space.kodirex.Battle;
 import space.kodirex.Battle.Battleable.Battleable;
 import space.kodirex.IO.IOProvider;
 
-import java.lang.reflect.Executable;
 import java.util.function.Supplier;
 
 public class Arena {
@@ -47,5 +46,12 @@ public class Arena {
         return String.format("       Name - [Health] - {Blocking} - <Powered>%n") +
                 String.format("%11s - [%6d] - {%8b} - <%7b>%n", pAlpha.getName(), pAlpha.getHealth(), pAlpha.isBlocking(), pAlpha.isPowered()) +
                 String.format("%11s - [%6d] - {%8b} - <%7b>%n", pBeta.getName(), pBeta.getHealth(), pBeta.isBlocking(), pBeta.isPowered());
+    }
+
+    public Battleable getWinner() {
+        if(!pAlpha.living()) return pBeta;
+        if(!pBeta.living()) return pAlpha;
+
+        throw new IllegalStateException("No one has won yet!");
     }
 }

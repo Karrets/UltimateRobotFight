@@ -21,8 +21,13 @@ public class Console extends IOProvider {
     }
 
     @Override
-    public <V> Optional<Parsable<V>> getParseable(String prompt, Parsable<V>[] parsable) {
+    public <V extends Parsable<?>> Optional<V> getParseable(String prompt, V[] parsable) {
         output(prompt);
+
+        for(V parse : parsable) {
+            outputf("%d. %s%n", parse.getID(), parse.getValue().toString());
+        }
+
         String input = keyboard.nextLine();
 
         try {
